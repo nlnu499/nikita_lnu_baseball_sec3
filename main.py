@@ -1,3 +1,4 @@
+# Main program controlling application flow
 from objects import Player, Lineup
 from db import load_players, save_players
 from ui import display_menu, display_lineup
@@ -138,4 +139,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
