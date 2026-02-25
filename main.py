@@ -3,7 +3,37 @@ from objects import Player, Lineup
 from db import load_players, save_players
 from ui import display_menu, display_lineup
 
+from datetime import datetime
+
 POSITIONS = ("C", "1B", "2B", "3B", "SS", "LF", "CF", "RF", "P")
+
+
+def get_game_date():
+    current_date = datetime.now().date()
+    print(f"CURRENT DATE: {current_date}")
+
+    date_input = input("GAME DATE (YYYY-MM-DD): ")
+
+    if date_input.strip() == "":
+        return None
+
+    try:
+        game_date = datetime.strptime(date_input, "%Y-%m-%d").date()
+        return game_date
+    except ValueError:
+        print("Invalid date format.")
+        return None
+
+
+def display_days_until_game(game_date):
+    if game_date:
+        today = datetime.now().date()
+        delta = (game_date - today).days
+
+        if delta > 0:
+            print(f"DAYS UNTIL GAME: {delta}")
+        else:
+            print("Game date is not in the future.")
 
 
 def main():
@@ -12,6 +42,13 @@ def main():
     # Load players from file
     for player in load_players():
         lineup.add_player(player)
+
+    print("=" * 64)
+    print("Baseball Team Manager")
+    print("=" * 64)
+
+    game_date = get_game_date()
+    display_days_until_game(game_date)
 
     while True:
         display_menu()
@@ -139,5 +176,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()
